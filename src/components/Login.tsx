@@ -1,17 +1,30 @@
 import axios from "axios";
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constants";
 
 const Login: React.FC = () => {
   const [emailId, setEmailId] = useState("premrahi234@gmail.com");
   const [password, setPassword] = useState("Prahi@123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/login', {
-        emailId,
-        password,
-      } ,{withCredentials:true});
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true },
+      );
+
+      console.log(res.data);
+      dispatch(addUser(res.data));
+      return navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -22,7 +35,7 @@ const Login: React.FC = () => {
       <fieldset className="fieldset bg-base-300 border-base-300 rounded-box w-xs border p-4">
         <legend className="fieldset-legend text-lg">Login</legend>
 
-        <label className="label">Email : {emailId}</label>
+        <label className="label">Email :</label>
         <input
           type="email"
           className="input"
@@ -40,10 +53,12 @@ const Login: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="btn btn-neutral mt-4 hover:bg-purple-500 " onClick={handleLogin}>
+        <button
+          className="btn btn-neutral mt-4 hover:bg-purple-500 "
+          onClick={handleLogin}
+        >
           Login
         </button>
-
       </fieldset>
     </div>
   );
