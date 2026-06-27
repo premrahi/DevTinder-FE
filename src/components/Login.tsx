@@ -8,6 +8,7 @@ import { BASE_URL } from "../constants";
 const Login: React.FC = () => {
   const [emailId, setEmailId] = useState("premrahi234@gmail.com");
   const [password, setPassword] = useState("Prahi@123");
+  const [error , setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,11 +23,12 @@ const Login: React.FC = () => {
         { withCredentials: true },
       );
 
-      console.log(res.data);
       dispatch(addUser(res.data));
       return navigate("/");
     } catch (err) {
-      console.log(err);
+
+      setError(err?.response?.data || "something went wrong!")
+      console.error(err);
     }
   };
 
@@ -53,6 +55,7 @@ const Login: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        <p className="text-red-500">{error}</p>
         <button
           className="btn btn-neutral mt-4 hover:bg-purple-500 "
           onClick={handleLogin}
