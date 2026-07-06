@@ -37,7 +37,7 @@ const Connections = () => {
         return (
           <div className="flex mx-auto p-4 my-10 rounded-3xl w-1/2 bg-slate-950">
             <div className="m-2 p-2">
-              <img src={photoUrl} alt="photo" className="rounded-4xl"></img>
+              <img src={photoUrl} alt="photo" className="rounded- w-50"></img>
             </div>
 
             <div className="my-auto m-2 p-2 text-left">

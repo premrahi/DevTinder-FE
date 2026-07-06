@@ -27,10 +27,16 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  if (!feed) return;
+
+  if (feed.length === 0) return <h1>lets wait for someone new</h1>;
+
   return (
     feed && (
       <div>
-        <UserCard user={feed?.data?.[1]} />
+        {feed?.data?.map((feed : any) => (
+          <UserCard user={feed} />
+        ))}
       </div>
     )
   );
