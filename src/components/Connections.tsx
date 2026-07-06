@@ -10,7 +10,7 @@ const Connections = () => {
 
   const fetchConnections = async () => {
     try {
-      const res: Response = await axios.get(BASE_URL + "/user/connections", {
+      const res = await axios.get(BASE_URL + "/user/connections", {
         withCredentials: true,
       });
       dispatch(addConnections(res.data?.data));
@@ -21,17 +21,17 @@ const Connections = () => {
 
   useEffect(() => {
     fetchConnections();
-  });
+  },[]);
 
   if (!connectedUsers) return;
 
-  if (connectedUsers.length === 0) return <h1>No Connections found</h1>;
+  if (connectedUsers.length === 0) return <h1 className="text-center my-20 text-4xl">Oops!, No Connections found</h1>;
 
   return (
     <div className="text-center  my-16 ">
       <span className="m-4 p-4  rounded-2xl  text-5xl font-semibold text-cyan-700 mx-auto">Connections</span>
 
-      {connectedUsers.map((connection: any) => {
+      {connectedUsers.map((connection:any) => {
         const { firstName, lastName, photoUrl, age, gender, about } =
           connection;
         return (
@@ -41,7 +41,7 @@ const Connections = () => {
             </div>
 
             <div className="my-auto m-2 p-2 text-left">
-              <h2 className="text-lg font-bold">{firstName + " " + lastName}</h2>
+              <h2 className="text-3xl font-semibold">{firstName + " " + lastName}</h2>
               <h3>age : {age}</h3>
               <h3>Gender : {gender}</h3>
               <p className="text-sm">{about}</p>
