@@ -3,24 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants";
 import { removeUser } from "../utils/userSlice";
-import { removeFeed } from "../utils/feedSlice";
+import { nullFeed } from "../utils/feedSlice";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
-      dispatch(removeUser());
-      dispatch(removeFeed());
-      return navigate("/login");
-    } catch (err) {
-      //error login
-      console.error(err);
-    }
-  };
+const handleLogout = async () => {
+  try {
+    await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+    dispatch(removeUser());
+    dispatch(nullFeed());
+    navigate("/login", { replace: true });
+  } catch (err) {
+    console.error("Logout failed:", err.response?.status, err.response?.data || err.message);
+  }
+};
 
   return (
     <div className="navbar bg-base-300 shadow-sm">

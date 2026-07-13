@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../constants";
 import { addFeed } from "../utils/feedSlice";
@@ -27,16 +27,14 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if (!feed) return;
+if(!feed) return null ;
 
-  if (feed.length === 0) return <h1>lets wait for someone new</h1>;
+  if (feed.data.length <= 0) return <h1 className="text-center my-10 text-4xl">lets wait for someone new</h1>;
 
   return (
     feed && (
       <div>
-        {feed?.data?.map((feed : any) => (
-          <UserCard user={feed} />
-        ))}
+          <UserCard user={feed?.data[0]} />
       </div>
     )
   );
