@@ -27,10 +27,10 @@ const UserCard = ({ user }) => {
 
   return (
     <div className="card bg-gray-600 rounded-4xl w-96 shadow-sm mx-auto my-10 ">
-      <figure className="my-6 ">
+      <figure className="my-6 w-[95%] mx-auto ">
         <img
           className="w-full h-auto mx-6 rounded-2xl hover:cursor-pointer"
-          src={photoUrl}
+          src={photoUrl} 
           alt="photo"
         />
       </figure>
