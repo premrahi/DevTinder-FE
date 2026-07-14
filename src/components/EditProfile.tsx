@@ -2,10 +2,12 @@ import { useState } from "react";
 import UserCard from "./UserCard";
 import axios from "axios";
 import { BASE_URL } from "../constants";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../utils/hooks";
 import { addUser } from "../utils/userSlice";
+import type { User } from "../utils/types";
 
-const EditProfile = ({ user }) => {
+
+const EditProfile = ({ user }: { user: User }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age || "");
@@ -15,7 +17,7 @@ const EditProfile = ({ user }) => {
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "");
   const [showToast, setShowToast] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const saveProfile = async () => {
     try {
@@ -39,7 +41,7 @@ const EditProfile = ({ user }) => {
       <div className="flex justify-center items-start gap-50 my-10">
         <div className="flex flex-col items-center">
           <UserCard
-            user={{ firstName, lastName, age, gender, about, skills, photoUrl }}
+            user={{...user,  firstName, lastName, age, gender, about, skills, photoUrl }}
           />
           <h2 className="mt-4 text-lg font-semibold">PREVIEW</h2>
         </div>

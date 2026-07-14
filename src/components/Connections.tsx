@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { BASE_URL } from "../constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 import { addConnections } from "../utils/connectionSlice";
 
 const Connections = () => {
-  const dispatch = useDispatch();
-  const connectedUsers = useSelector((store) => store.connections);
+  const dispatch = useAppDispatch();
+  const connectedUsers = useAppSelector((store) => store.connections);
 
   const fetchConnections = async () => {
     try {
@@ -31,7 +31,7 @@ const Connections = () => {
     <div className="text-center  my-16 ">
       <span className="m-4 p-4  rounded-2xl  text-5xl font-semibold text-cyan-700 mx-auto">Connections</span>
 
-      {connectedUsers.map((connection:any) => {
+      {connectedUsers.map((connection) => {
         const { firstName, lastName, photoUrl, age, gender, about } =
           connection;
         return (

@@ -1,13 +1,14 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants";
 import { removeUser } from "../utils/userSlice";
 import { nullFeed } from "../utils/feedSlice";
 
+
 const Navbar = () => {
-  const user = useSelector((store) => store.user);
-  const dispatch = useDispatch();
+  const user = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
 const handleLogout = async () => {
@@ -17,8 +18,12 @@ const handleLogout = async () => {
     dispatch(nullFeed());
     navigate("/login", { replace: true });
   } catch (err) {
-    console.error("Logout failed:", err.response?.status, err.response?.data || err.message);
-  }
+      if (axios.isAxiosError(err)) {
+        console.error("Logout failed:", err.response?.status, err.response?.data || err.message);
+      } else {
+        console.error("Logout failed:", err);
+      }
+    }
 };
 
   return (

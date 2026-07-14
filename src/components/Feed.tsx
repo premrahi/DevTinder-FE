@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch  } from "../utils/hooks";
 import { BASE_URL } from "../constants";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import { useAppSelector } from "../utils/hooks";
+
 
 const Feed = () => {
-  const feed = useSelector((store) => store.feed);
-  const dispatch = useDispatch();
+  const feed = useAppSelector((store) => store.feed);
+  const dispatch = useAppDispatch();
   // console.log(feed);
 
   const getFeed = async () => {
@@ -16,7 +18,7 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res.data));
+      dispatch(addFeed(res.data.data));
       
     } catch (err) {
       console.error(err);
@@ -29,12 +31,12 @@ const Feed = () => {
 
 if(!feed) return null ;
 
-  if (feed.data.length <= 0) return <h1 className="text-center my-10 text-4xl">lets wait for someone new</h1>;
+  if (feed.length <= 0) return <h1 className="text-center my-10 text-4xl">lets wait for someone new</h1>;
 
   return (
     feed && (
       <div>
-          <UserCard user={feed?.data[0]} />
+          <UserCard user={feed[0]} />
       </div>
     )
   );

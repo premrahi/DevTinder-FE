@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { BASE_URL } from "../constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 import { addRequests, removeRequest } from "../utils/requestSlice";
 
 const Requests = () => {
-  const dispatch = useDispatch();
-  const requests = useSelector((store) => store.requests);
+  const dispatch = useAppDispatch();
+  const requests = useAppSelector((store) => store.requests);
 
   const fetchRequest = async () => {
     try {
@@ -50,7 +50,7 @@ const Requests = () => {
         Requests
       </span>
 
-      {requests.map((request: any) => {
+      {requests.map((request) => {
         const { firstName, lastName, photoUrl, age, gender, about } =
           request.fromUserId;
         return (

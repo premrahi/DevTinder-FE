@@ -1,11 +1,12 @@
 import axios from "axios";
 import { BASE_URL } from "../constants";
-import { useDispatch } from "react-redux";
+import {  useAppDispatch } from "../utils/hooks";
 import { removeFeed } from "../utils/feedSlice";
+import type { User } from "../utils/types";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user } : {user :User}) => {
   
-  const dispatch = useDispatch() ;
+  const dispatch = useAppDispatch() ;
   
   const { _id, age, gender, firstName, lastName, about, photoUrl } =
     user;
